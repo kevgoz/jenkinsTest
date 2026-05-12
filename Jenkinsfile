@@ -22,10 +22,10 @@ pipeline {
                 start java -jar target\\*.jar
                 '''
             }*/
-            steps {
+             steps {
                 bat '''
-                taskkill /F /IM java.exe || exit 0
-                bat 'java -jar target\\*.jar'
+                for /f "tokens=5" %%a in ('netstat -ano ^| findstr :8082') do taskkill /PID %%a /F
+                start /B java -jar target\\single-rest-0.0.1-SNAPSHOT.jar
                 '''
             }
         }
